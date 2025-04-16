@@ -11,12 +11,19 @@ env:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        platform:
+          - os: ubuntu-latest
+          - os: windows-latest
+          - os: macos-latest
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform.os }}
 
     steps:
     - name: Install bevy linux dependencies
-      run: sudo apt-get update && sudo apt-get install libasound2-dev
+      run: sudo apt-get update && sudo apt-get install libasound2-dev libpipewire-0.3-dev libwayland-dev libx11-dev
+      if: contains(matrix.platform.os, 'ubuntu')
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose
