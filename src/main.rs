@@ -18,12 +18,12 @@ use sdl3::pixels::{Color, PixelFormat};
 use sdl3::rect::Rect;
 use sdl3::render::{Texture, TextureCreator};
 use sdl3::surface::Surface;
+use sdl3::sys::everything::SDL_PixelFormat;
 use sdl3::ttf::Sdl3TtfContext;
 use sdl3::video::WindowContext;
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 use std::time::{Duration, Instant};
-use sdl3::sys::everything::SDL_PixelFormat;
 use vpxtool::indexer::{IndexedTable, VoidProgress};
 use vpxtool::vpinball_config::{VPinballConfig, WindowType};
 use vpxtool::{config, indexer};
@@ -88,9 +88,8 @@ fn run() -> Result<ExitCode> {
         resolved_config.configured_pinmame_folder().as_deref(),
         &progress,
         Vec::new(),
-    ).map_err(
-        |e| anyhow::anyhow!("Failed to index tables folder: {:?}", e),
-    )?;
+    )
+    .map_err(|e| anyhow::anyhow!("Failed to index tables folder: {:?}", e))?;
     let tables = {
         let mut loaded = index.tables();
         loaded.sort_by_key(|indexed| display_table_name(indexed).to_lowercase());
@@ -163,11 +162,7 @@ fn run() -> Result<ExitCode> {
 
         // Rectangle to define the position and size of the table name text
         // let mut table_name_rect = Rect::new(0, 0, 0, 0);
-        let empty_surface =  Surface::new(
-            100,
-            100,
-            playfield_canvas.default_pixel_format()
-        )?;
+        let empty_surface = Surface::new(100, 100, playfield_canvas.default_pixel_format())?;
 
         let mut playfield_texture = load_texture(
             &playfield_texture_creator,
