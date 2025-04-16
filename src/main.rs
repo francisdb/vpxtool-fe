@@ -40,7 +40,7 @@ const DEFAULT_FONT_PATH: &str = "/System/Library/Fonts/SFNS.ttf";
 #[cfg(target_os = "windows")]
 const DEFAULT_FONT_PATH: &str = "C:\\Windows\\Fonts\\Arial.ttf";
 
-#[cfg(not(target_os = "macos"))]
+#[cfg(target_os = "linux")]
 const DEFAULT_FONT_PATH: &str = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf";
 
 fn main() -> ExitCode {
