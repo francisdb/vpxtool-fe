@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install bevy linux dependencies
+      run: sudo apt-get update && sudo apt-get install libasound2-dev
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose
